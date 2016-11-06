@@ -1,12 +1,15 @@
 
-import { ADD_PLAYER } from '../actions/add-player';
-import { DELETE_PLAYER } from '../actions/delete-player';
+import { UPDATE_PLAYERS } from '../actions/update-players'
+import { ADD_PLAYER } from '../actions/add-player'
+import { DELETE_PLAYER } from '../actions/delete-player'
 import { ASSIGN_RANK } from '../actions/assign-rank'
-import { PLUS_ONE } from '../actions/plus-one';
-import { SET_RANK } from '../actions/set-rank';
+import { PLUS_ONE } from '../actions/plus-one'
 
 export default (state = [], {type, payload} = {}) => {
   switch (type) {
+    case UPDATE_PLAYERS :
+      return payload
+
     case PLUS_ONE :
       return sortPlayers(state.map((player) => {
         if (player.playerId === payload) {
@@ -17,12 +20,7 @@ export default (state = [], {type, payload} = {}) => {
       }));
 
     case ADD_PLAYER :
-      const newPlayer = {
-        playerId: nextPlayerId(state),
-        name: payload,
-        avatar: `https://api.adorable.io/avatars/285/${payload}.png`,
-        points: 0
-      };
+      return sortPlayers(state.concat([ payload ]))
 
     case DELETE_PLAYER :
       return sortPlayers(state.filter((player) => {
@@ -69,6 +67,8 @@ export default (state = [], {type, payload} = {}) => {
           }
         })
       }
+    default:
+      return state
   }
 }
 

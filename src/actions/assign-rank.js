@@ -17,7 +17,7 @@ export default (playerId) => {
   }
 }
 
-export const (playerId) => {
+export const assignRank = (playerId) => {
   return {
     type: ASSIGN_RANK,
     payload: playerId
